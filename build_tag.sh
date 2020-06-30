@@ -20,9 +20,9 @@ generate_post_data() {
 EOF
 }
 
-ASSETS_URL=$(curl -d "$(generate_post_data)" -H "Authorization: token $GITHUB_TOKEN" -X POST "https://api.github.com/repos/$GIT_ORG/$GIT_REPO/releases"|grep assets_url|cut -d'"' -f4)
+UPLOAD_URL=$(curl -d "$(generate_post_data)" -H "Authorization: token $GITHUB_TOKEN" -X POST "https://api.github.com/repos/$GIT_ORG/$GIT_REPO/releases"|grep upload_url|cut -d'"' -f4|cut -d'{' -f1)
 
 rm $ZIP_NAME
 zip $ZIP_NAME index.js
 
-curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" --data-binary $ZIP_NAME "$ASSETS_URL?name=$ZIP_NAME" 
+curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" --data-binary $ZIP_NAME "$UPLOAD_URL?name=$ZIP_NAME" 
