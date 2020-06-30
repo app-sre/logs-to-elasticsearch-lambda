@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 TAG=$(echo $GIT_BRANCH|cut -d"/" -f3)
 GIT_ORG=$(echo $GIT_URL|cut -d":" -f2|cut -d"/" -f1)
 GIT_REPO=$(echo $GIT_URL|cut -d"/" -f2|cut -d"." -f1)
@@ -25,4 +23,4 @@ UPLOAD_URL=$(curl -d "$(generate_post_data)" -H "Authorization: token $GITHUB_TO
 rm $ZIP_NAME
 zip $ZIP_NAME index.js
 
-curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" --data-binary $ZIP_NAME "$UPLOAD_URL?name=$ZIP_NAME" 
+curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" -d $ZIP_NAME "$UPLOAD_URL?name=$ZIP_NAME" 
