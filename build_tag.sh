@@ -23,4 +23,4 @@ UPLOAD_URL=$(curl -d "$(generate_post_data)" -H "Authorization: token $GITHUB_TO
 rm $ZIP_NAME
 zip $ZIP_NAME index.js
 
-curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" -d $ZIP_NAME "$UPLOAD_URL?name=$ZIP_NAME" 
+curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" --data-binary @$ZIP_NAME "$UPLOAD_URL?name=$ZIP_NAME" 
