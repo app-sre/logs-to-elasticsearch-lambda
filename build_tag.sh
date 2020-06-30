@@ -13,7 +13,7 @@ generate_post_data() {
   "tag_name": "$TAG",
   "target_commitish": "$GIT_COMMIT",
   "name": "$TAG",
-  "body": ""new version $TAG",
+  "body": "new version $TAG",
   "draft": false,
   "prerelease": false
 }
