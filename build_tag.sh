@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -x
+
+TAG=$(echo $GIT_BRANCH|cut -d"/" -f3)
+GIT_ORG=$(echo $GIT_URL|cut -d"/" -f4)
+GIT_REPO=$(echo $GIT_URL|cut -d"/" -f5)
+ZIP_NAME=LogsToElasticsearch.zip
+
+generate_post_data() {
+  cat << EOF
+{
+  "tag_name": "$TAG",
+  "target_commitish": "$GIT_COMMIT",
+  "name": "$TAG",
+  "body": ""new version $TAG",
+  "draft": false,
+  "prerelease": false
+}
+EOF
+}
+
+ASSETS_URL=$(curl -d "$(generate_post_data)" -H "Authorization: token $GITHUB_TOKEN" -X POST "https://api.github.com/repos/$GIT_ORG/$GIT_REPO/releases"|grep assets_url|cut -d'"' -f4)
+
+rm $ZIP_NAME
+zip $ZIP_NAME index.js
+
+curl -H "Authorization: token $GITHUB_TOKEN" -X POST -H "Content-Type:application/zip" --data-binary $ZIP_NAME "$ASSETS_URL?name=$ZIP_NAME" 
