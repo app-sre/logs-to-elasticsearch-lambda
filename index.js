@@ -77,7 +77,7 @@ function transform(payload) {
 
         var action = { "index": {} };
         action.index._index = indexName;
-        action.index._type = '_log';
+        action.index._type = '_doc';
         action.index._id = logEvent.id;
 
         bulkRequestBody += [
