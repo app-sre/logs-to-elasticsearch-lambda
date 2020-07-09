@@ -10,7 +10,7 @@ var endpoint = ENV.es_endpoint;
 // Set this to true if you want to debug why data isn't making it to
 // your Elasticsearch cluster. This will enable logging of failed items
 // to CloudWatch Logs.
-var logFailedResponses = false;
+var logFailedResponses = true;
 
 exports.handler = function(input, context) {
     // decode input from base64
