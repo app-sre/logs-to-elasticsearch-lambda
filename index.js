@@ -101,7 +101,7 @@ function buildSource(message, extractedFields) {
                     continue;
                 }
 
-                jsonSubString = extractJson(value);
+                var jsonSubString = extractJson(value);
                 if (jsonSubString !== null) {
                     source['$' + key] = JSON.parse(jsonSubString);
                 }
@@ -112,7 +112,7 @@ function buildSource(message, extractedFields) {
         return source;
     }
 
-    jsonSubString = extractJson(message);
+    var jsonSubString = extractJson(message);
     if (jsonSubString !== null) {
         return JSON.parse(jsonSubString);
     }
